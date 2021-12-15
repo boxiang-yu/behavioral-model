@@ -31,6 +31,7 @@
 #include <fstream>
 #include <mutex>
 #include <string>
+#include <arpa/inet.h>
 
 #include "simple_switch.h"
 #include "register_access.h"
@@ -60,12 +61,180 @@ struct bmv2_hash {
   }
 };
 
+struct h1 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(155878125)*data + 144393013) % 179424691) % 976;
+    }
+    return hash;
+  }
+};
+
+struct h2 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(113292259)*data + 68483982) % 179424691) % 976;
+    }
+    return hash;
+  }
+};
+
+struct h3 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(35316782)*data + 126831809) % 179424691) % 976;
+    }
+    return hash;
+  }
+};
+
+struct h4 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(159559853)*data + 107589136) % 179424691) % 976;
+    }
+    return hash;
+  }
+};
+
+struct g1 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(81840042)*data + 13527551) % 179424691) % 2;
+    }
+    return hash;
+  }
+};
+
+struct g2 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(19537968)*data + 97145494) % 179424691) % 2;
+    }
+    return hash;
+  }
+};
+
+struct g3 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(50123735)*data + 142091935) % 179424691) % 2;
+    }
+    return hash;
+  }
+};
+
+struct g4 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(133965917)*data + 4784577) % 179424691) % 2;
+    }
+    return hash;
+  }
+};
+
+struct d1 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(113292259)*data + 68483982) % 179424691) % 1400;
+    }
+    return hash;
+  }
+};
+
+struct d2 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(113292259)*data + 68483982) % 179424691) % 1400;
+    }
+    return hash;
+  }
+};
+
+struct d3 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(35316782)*data + 126831809) % 179424691) % 1400;
+    }
+    return hash;
+  }
+};
+
+struct d4 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(159559853)*data + 107589136) % 179424691) % 1400;
+    }
+    return hash;
+  }
+};
+
+struct d5 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(81840042)*data + 13527551) % 179424691) % 1400;
+    }
+    return hash;
+  }
+};
+
+struct d6 {
+  uint32_t operator()(const char *buf, size_t s) const {
+    uint32_t hash = 0;
+    if (s == 4) {
+      uint32_t data = ntohl(*reinterpret_cast<const uint32_t*>(buf));
+      hash = ((static_cast<uint64_t>(19537968)*data + 97145494) % 179424691) % 1400;
+    }
+    return hash;
+  }
+};
+
 }  // namespace
 
 // if REGISTER_HASH calls placed in the anonymous namespace, some compiler can
 // give an unused variable warning
 REGISTER_HASH(hash_ex);
 REGISTER_HASH(bmv2_hash);
+REGISTER_HASH(h1);
+REGISTER_HASH(h2);
+REGISTER_HASH(h3);
+REGISTER_HASH(h4);
+REGISTER_HASH(g1);
+REGISTER_HASH(g2);
+REGISTER_HASH(g3);
+REGISTER_HASH(g4);
+REGISTER_HASH(d1);
+REGISTER_HASH(d2);
+REGISTER_HASH(d3);
+REGISTER_HASH(d4);
+REGISTER_HASH(d5);
+REGISTER_HASH(d6);
 
 extern int import_primitives(SimpleSwitch *simple_switch);
 
